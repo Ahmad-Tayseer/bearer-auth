@@ -11,7 +11,7 @@ async function bearer(req, res, next) {
             })
             .catch(() => {
                 res.status(403);
-                res.send("Invalid Signin");
+                res.send("Invalid Token");
             })
     }
 }

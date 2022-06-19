@@ -3,17 +3,24 @@
 const express = require('express');
 const app = express();
 
-const authRouter = require("./routes/index.routes.js");
-
 const notFoundError = require('./error-handlers/404');
 const internalError = require('./error-handlers/500');
+
+const signinRouters = require("./routes/signin");
+const signupRouters = require("./routes/signup");
+const secretStuffRouters = require("./routes/secretstuff");
+const getUsersRouters = require("./routes/getUsers");
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.status(200).send('Hello World!');
 });
 
-app.use(express.json());
-app.use(authRouter);
+app.use(signinRouters);
+app.use(signupRouters);
+app.use(secretStuffRouters);
+app.use(getUsersRouters);
 
 app.use('*', notFoundError);
 app.use(internalError);
