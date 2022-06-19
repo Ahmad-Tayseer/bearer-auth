@@ -22,7 +22,7 @@ const users =
 
         token: {
             type: DataTypes.VIRTUAL,
-            get() {return jwt.sign({ username: this.username }), SECRET;}
+            // get() {return jwt.sign({ username: this.username }), SECRET;}
         }
     });
 
@@ -30,7 +30,7 @@ users.authenticateBasic = async function (username, password) {
     const user = await users.findOne({ where: { username: username } })
     const valid = await bcrypt.compare(password, user.password)
     if (valid) {
-        let newToken = jwt.sign({ username: user.username }, SECRET,{expiresIn : '15 min'});//reqire a new token in 15 min
+        let newToken = jwt.sign({ username: user.username }, SECRET);
         // console.log('************************', newToken);
         user.token = newToken;
         return user;
@@ -42,7 +42,7 @@ users.authenticateBasic = async function (username, password) {
 
 users.authenticateBearer = async function (token) {
     const parsedToken = jwt.verify(token, SECRET);
-    console.log('parsedToken >>>>>>>>>>>>>>>>>>', parsedToken);
+    // console.log('parsedToken >>>>>>>>>>>>>>>>>>', parsedToken);
     const user = await users.findOne({ where: { username: parsedToken.username } });
     if (user.username) {
         return user;
@@ -52,5 +52,5 @@ users.authenticateBearer = async function (token) {
 }
     
 
-module.exports = {users:users};
+module.exports = {users: users};
 

@@ -20,7 +20,6 @@ const sequelizeOptions =
 
 const sequelize = new Sequelize(POSTGRES_URI, sequelizeOptions);
 
-
 module.exports = {
-    sequelize, DataTypes
+    sequelize, DataTypes,
 };
